@@ -1,0 +1,128 @@
+import java.time.LocalDate;
+
+public class Musteri {
+    
+    // Müşteri Özellikleri (Kapsülleme - Encapsulation)
+    private String tcKimlik;
+    private String ad;
+    private String soyad;
+    private String telefon;
+    private int odaNumarasi;
+    private LocalDate girisTarihi;
+    private LocalDate cikisTarihi;
+
+    // Boş Yapıcı Metot (Default Constructor)
+    public Musteri() {
+    }
+
+    // Dolu Yapıcı Metot (Parameterized Constructor)
+    public Musteri(String tcKimlik, String ad, String soyad, String telefon, int odaNumarasi, LocalDate girisTarihi, LocalDate cikisTarihi) {
+        this.tcKimlik = tcKimlik;
+        this.ad = ad;
+        this.soyad = soyad;
+        this.telefon = telefon;
+        this.odaNumarasi = odaNumarasi;
+        this.girisTarihi = girisTarihi;
+        this.cikisTarihi = cikisTarihi;
+    }
+
+    // --- Getter ve Setter Metotları ---
+
+    public String getTcKimlik() {
+        return tcKimlik;
+    }
+
+    public void setTcKimlik(String tcKimlik) {
+        this.tcKimlik = tcKimlik;
+    }
+
+    public String getAd() {
+        return ad;
+    }
+
+    public void setAd(String ad) {
+        this.ad = ad;
+    }
+
+    public String getSoyad() {
+        return soyad;
+    }
+
+    public void setSoyad(String soyad) {
+        this.soyad = soyad;
+    }
+
+    public String getTelefon() {
+        return telefon;
+    }
+
+    public void setTelefon(String telefon) {
+        this.telefon = telefon;
+    }
+
+    public int getOdaNumarasi() {
+        return odaNumarasi;
+    }
+
+    public void setOdaNumarasi(int odaNumarasi) {
+        this.odaNumarasi = odaNumarasi;
+    }
+
+    public LocalDate getGirisTarihi() {
+        return girisTarihi;
+    }
+
+    public void setGirisTarihi(LocalDate girisTarihi) {
+        this.girisTarihi = girisTarihi;
+    }
+
+    public LocalDate getCikisTarihi() {
+        return cikisTarihi;
+    }
+
+    public void setCikisTarihi(LocalDate cikisTarihi) {
+        this.cikisTarihi = cikisTarihi;
+    }
+
+    // Müşteri bilgilerini düzgün yazdırmak için toString metodu
+    @Override
+    public String toString() {
+        return "Müşteri Bilgileri:\n" +
+               "TC Kimlik   : " + tcKimlik + "\n" +
+               "Ad Soyad    : " + ad + " " + soyad + "\n" +
+               "Telefon     : " + telefon + "\n" +
+               "Oda No      : " + odaNumarasi + "\n" +
+               "Giriş Tarihi: " + girisTarihi + "\n" +
+               "Çıkış Tarihi: " + cikisTarihi + "\n" +
+               "------------------------------";
+    }
+
+    // Test etmek için Main metodu (Eclipse'te Run As -> Java Application demek için)
+    public static void main(String[] args) {
+        
+        // 1. Yöntem: Dolu constructor kullanarak müşteri oluşturma
+        Musteri musteri1 = new Musteri(
+            "12345678901", 
+            "Ahmet", 
+            "Yılmaz", 
+            "05551234567", 
+            101, 
+            LocalDate.of(2023, 10, 1), 
+            LocalDate.of(2023, 10, 5)
+        );
+
+        // 2. Yöntem: Boş constructor ve setter metotları kullanarak müşteri oluşturma
+        Musteri musteri2 = new Musteri();
+        musteri2.setTcKimlik("98765432109");
+        musteri2.setAd("Ayşe");
+        musteri2.setSoyad("Kaya");
+        musteri2.setTelefon("05329876543");
+        musteri2.setOdaNumarasi(205);
+        musteri2.setGirisTarihi(LocalDate.now()); // Bugünkü tarihi alır
+        musteri2.setCikisTarihi(LocalDate.now().plusDays(3)); // 3 gün sonrasını ayarlar
+
+        // Ekrana Yazdırma
+        System.out.println(musteri1.toString());
+        System.out.println(musteri2.toString());
+    }
+}
