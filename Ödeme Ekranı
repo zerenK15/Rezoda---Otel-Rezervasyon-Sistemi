@@ -1,0 +1,55 @@
+import java.util.Scanner;
+
+public class OdaVeOdemeSistemi {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // 1. AŞAMA: ODA DETAYLARINI GÖSTERME (Örnek veriler kullanılmıştır)
+        System.out.println("=======================================");
+        System.out.println("         SEÇİLEN ODA DETAYLARI         ");
+        System.out.println("=======================================");
+        System.out.println("Oda Tipi         : Deniz Manzaralı Süit");
+        System.out.println("Kişi Sayısı      : 2 Yetişkin");
+        System.out.println("Kalınacak Gün    : 3 Gün");
+        System.out.println("Ödenecek Tutar   : 4050.0 TL");
+        System.out.println("=======================================\n");
+
+        // 2. AŞAMA: ÖDEME BİLGİLERİNİ ALMA
+        System.out.println("Lütfen Ödeme Bilgilerinizi Giriniz");
+        System.out.println("---------------------------------------");
+
+        System.out.print("Kart Üzerindeki İsim Soyisim : ");
+        String kartSahibi = scanner.nextLine();
+
+        System.out.print("Kart Numarası (16 Haneli)    : ");
+        String kartNumarasi = scanner.nextLine();
+
+        System.out.print("Son Kullanma Tarihi (AA/YY)  : ");
+        String sonKullanmaTarihi = scanner.nextLine();
+
+        System.out.print("CVV Kodu (3 Haneli Güvenlik) : ");
+        String cvvKodu = scanner.nextLine();
+
+        // Sistemi gerçekçi kılmak adına küçük bir "bekleme" (simülasyon) ekliyoruz
+        System.out.println("\nÖdemeniz bankanızla iletişim kurularak işleniyor, lütfen bekleyiniz...");
+        
+        try {
+            // Programı 2 saniye (2000 milisaniye) bekletir
+            Thread.sleep(2000); 
+        } catch (InterruptedException e) {
+            System.out.println("Bekleme sırasında bir hata oluştu.");
+        }
+
+        // 3. AŞAMA: SONUÇ VE KAPANIŞ
+        System.out.println("\n=======================================");
+        System.out.println("        REZERVASYON TAMAMLANDI!        ");
+        System.out.println("=======================================");
+        System.out.println("Sayın " + kartSahibi + ", ödemeniz başarıyla alınmıştır.");
+        System.out.println("Bizi tercih ettiğiniz için teşekkür ederiz. İyi tatiller dileriz!");
+        System.out.println("=======================================");
+
+        // Bellek sızıntılarını önlemek için scanner nesnesini kapatıyoruz
+        scanner.close();
+    }
+}
