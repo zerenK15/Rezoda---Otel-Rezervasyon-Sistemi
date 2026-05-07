@@ -1,0 +1,23 @@
+import javax.swing.JOptionPane;
+
+public class BasitOtelArayuz {
+
+    public static void main(String[] args) {
+        
+        // 1. Ekrana bir soru kutucuğu çıkar ve gün sayısını al
+        String cevap = JOptionPane.showInputDialog("Otelimizde kaç gün kalacaksınız?");
+        
+        // Alınan metin cevabını matematiksel bir sayıya çevir
+        int gunSayisi = Integer.parseInt(cevap);
+        
+        // 2. Fiyatı hesapla (Gecelik 1500 TL varsayıyoruz)
+        int toplamTutar = gunSayisi * 1500;
+        
+        // 3. Sonucu ekranda bir bilgi kutucuğu ile göster
+        String mesaj = "Rezervasyon Tamamlandı!\n\n" + 
+                       "Kalınacak Gün: " + gunSayisi + " Gün\n" +
+                       "Toplam Tutar: " + toplamTutar + " TL";
+                       
+        JOptionPane.showMessageDialog(null, mesaj);
+    }
+}
