@@ -1,15 +1,16 @@
 package proje.MenuEkranlari;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.List;
-
 import proje.GenelSiniflar.Otel;
 import proje.GenelSiniflar.Lokasyon;
 import proje.mantik.AramaMotoru;
@@ -167,7 +168,7 @@ public class AramaEkraniGUI extends JFrame {
         List<Otel> oteller = new ArrayList<>();
         String dosyaYolu = "oteller.csv"; 
         
-        try (BufferedReader br = new BufferedReader(new FileReader(dosyaYolu))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(dosyaYolu), StandardCharsets.UTF_8))) {
             String satir;
             boolean ilkSatir = true;
             
