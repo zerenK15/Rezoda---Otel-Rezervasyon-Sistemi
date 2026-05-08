@@ -1,18 +1,30 @@
 package proje.MenuEkranlari;
 
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.time.format.DateTimeFormatter;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.util.List; // İŞTE HATAYI ÇÖZEN HAYAT KURTARICI SATIR!
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
 
 import proje.GenelSiniflar.Musteri;
 import proje.GenelSiniflar.Rezervasyon;
-import proje.mantik.SistemHafizasi;
 import proje.hatalar.GecersizGirisException;
+import proje.mantik.SistemHafizasi;
 
+@SuppressWarnings("serial")
 public class ProfilEkraniGUI extends JFrame {
     private JTable tablo;
     private DefaultTableModel tabloModel;

@@ -13,23 +13,18 @@ import proje.hatalar.GecmisTarihException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
+@SuppressWarnings("serial")
 public class OdemeEkraniGUI extends JFrame {
+    
+    // Sadece geri dönüş için odaEkran'ı tutmamız yeterli, diğerleri constructor içinde kullanılıyor
     private JFrame odaEkran;
-    private Otel otel;
-    private OdaTipi odaTipi;
-    private LocalDate girisTarihi;
-    private LocalDate cikisTarihi;
-    private int gunSayisi;
-    private double toplamTutar;
 
     public OdemeEkraniGUI(JFrame odaEkran, Otel otel, OdaTipi odaTipi, LocalDate girisTarihi, LocalDate cikisTarihi) {
         this.odaEkran = odaEkran;
-        this.otel = otel;
-        this.odaTipi = odaTipi;
-        this.girisTarihi = girisTarihi;
-        this.cikisTarihi = cikisTarihi;
-        this.gunSayisi = (int) ChronoUnit.DAYS.between(girisTarihi, cikisTarihi);
-        this.toplamTutar = odaTipi.getGunlukFiyat() * gunSayisi;
+        
+        // Sınıf değişkeni yerine direkt lokal değişken yaptık, uyarılar bitti!
+        int gunSayisi = (int) ChronoUnit.DAYS.between(girisTarihi, cikisTarihi);
+        double toplamTutar = odaTipi.getGunlukFiyat() * gunSayisi;
 
         setTitle("Rezoda - Ödeme");
         setBounds(100, 100, 700, 650);
@@ -49,6 +44,17 @@ public class OdemeEkraniGUI extends JFrame {
         lblBaslik.setForeground(Color.WHITE);
         lblBaslik.setBounds(30, 20, 400, 50);
         ustPanel.add(lblBaslik);
+
+        // --- X BUTONU ---
+        JButton btnKapat = new JButton("✕");
+        btnKapat.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        btnKapat.setBackground(new Color(231, 76, 60));
+        btnKapat.setForeground(Color.WHITE);
+        btnKapat.setBounds(650, 20, 35, 35);
+        btnKapat.setBorderPainted(false);
+        btnKapat.setFocusPainted(false);
+        btnKapat.addActionListener(e -> donOdaEkranina());
+        ustPanel.add(btnKapat);
 
         // --- ÖZET PANEL ---
         JPanel ozetPanel = new JPanel();
@@ -109,7 +115,7 @@ public class OdemeEkraniGUI extends JFrame {
             }
         });
 
-        // --- ÖDEME YAP BUTONU (HATA YAKALAMA BURADA) ---
+        // --- ÖDEME YAP BUTONU ---
         JButton btnOde = new JButton("✓ ÖDEME YAP");
         btnOde.setBounds(250, 545, 200, 40);
         btnOde.setBackground(new Color(46, 204, 113));
@@ -169,6 +175,24 @@ public class OdemeEkraniGUI extends JFrame {
         });
         getContentPane().add(btnOde);
 
+        // GERİ BUTONU
+        JButton btnGeri = new JButton("← GERİ");
+        btnGeri.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        btnGeri.setBackground(new Color(149, 165, 166));
+        btnGeri.setForeground(Color.WHITE);
+        btnGeri.setBounds(50, 545, 150, 40);
+        btnGeri.setBorderPainted(false);
+        btnGeri.setFocusPainted(false);
+        btnGeri.addActionListener(e -> donOdaEkranina());
+        getContentPane().add(btnGeri);
+
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                donOdaEkranina();
+            }
+        });
+        
         setVisible(true);
     }
 
@@ -181,6 +205,8 @@ public class OdemeEkraniGUI extends JFrame {
 
     private void donOdaEkranina() {
         this.dispose();
-        odaEkran.setVisible(true);
+        if(odaEkran != null) {
+            odaEkran.setVisible(true);
+        }
     }
 }
