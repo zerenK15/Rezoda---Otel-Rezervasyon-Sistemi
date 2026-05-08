@@ -1,6 +1,6 @@
 package proje.mantik;
 
-import proje.modeller.Musteri;
+import proje.GenelSiniflar.Musteri;
 import java.util.List;
 
 public class KimlikDogrulayicisi implements IKimlikDogrulama {
@@ -25,7 +25,7 @@ public class KimlikDogrulayicisi implements IKimlikDogrulama {
 			Musteri musteri = kayitliMusteriler.get(i);  // Listeden i. sıradaki müşteri nesnesini çekip, alt satırlarda şifre/ad kontrolü yapabilmek için 'musteri' değişkenine atıyoruz.
 			
 			if(musteri.getKullaniciAdi().equals(girilenAd) && musteri.getSifre().equals(girilenSifre)) {    //Girilen ad ile şifrenin, sistemdeki ad ve şifreyle uyumlu olup olmadığını kontrol eder
-				System.out.println("Giriş Başarılı! Hoş geldiniz, " + musteri.getAd());
+				System.out.println("Giriş Başarılı! Hoş geldiniz, " + musteri.getAdSoyad());
 				return true;
 			}
 	    }

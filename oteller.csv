@@ -1,0 +1,51 @@
+id,ad,sehir,ilce,puan,odaSayisi
+1,Mavi Otel,İstanbul,Fatih,4.5,150
+2,Deniz Oteli,İstanbul,Beyoğlu,4.2,200
+3,Saray Oteli,İstanbul,Taksim,4.8,180
+4,Boğazın İncisi,İstanbul,Beşiktaş,4.9,120
+5,Tarihi Yarımada Pera,İstanbul,Sultanahmet,4.7,90
+6,Kadıköy Rıhtım Otel,İstanbul,Kadıköy,4.1,110
+7,Ataşehir Suit,İstanbul,Ataşehir,4.3,85
+8,Kızılay Oteli,Ankara,Kızılay,4.3,120
+9,Çankaya Köşkü Otel,Ankara,Çankaya,4.7,160
+10,Ulus Tarihi Otel,Ankara,Ulus,3.9,75
+11,Bahçelievler Konaklama,Ankara,Bahçelievler,4.0,50
+12,Tunalı Butik Otel,Ankara,Çankaya,4.6,40
+13,Eryaman Life Otel,Ankara,Etimesgut,4.1,200
+14,Gölbaşı Resort,Ankara,Gölbaşı,4.5,140
+15,Deniz Kızı Oteli,İzmir,Alsancak,4.6,160
+16,Sahil Oteli,İzmir,Konak,4.4,140
+17,Karşıyaka Palas,İzmir,Karşıyaka,4.2,110
+18,Çeşme Marina Otel,İzmir,Çeşme,4.8,300
+19,Alaçatı Taş Ev,İzmir,Çeşme,4.9,25
+20,Urla Bağ Evi,İzmir,Urla,4.7,30
+21,Efes Antik Otel,İzmir,Selçuk,4.5,80
+22,Antalya Güneşi,Antalya,Muratpaşa,4.3,250
+23,Konyaaltı Plaj Oteli,Antalya,Konyaaltı,4.6,320
+24,Lara Delüks,Antalya,Lara,4.8,400
+25,Kemer Tatil Köyü,Antalya,Kemer,4.5,500
+26,Kaş Manzara Butik,Antalya,Kaş,4.9,45
+27,Alanya Kalesi Otel,Antalya,Alanya,4.2,180
+28,Olimpos Ağaç Evleri,Antalya,Kumluca,4.4,60
+29,Uludağ Kar Oteli,Bursa,Osmangazi,4.6,150
+30,Mudanya Sahil,Bursa,Mudanya,4.3,90
+31,Yeşil Türbe Konakları,Bursa,Yıldırım,4.5,70
+32,İznik Gölü Oteli,Bursa,İznik,4.1,50
+33,Eskişehir Porsuk Otel,Eskişehir,Odunpazarı,4.5,100
+34,Sazova Aile Oteli,Eskişehir,Tepebaşı,4.4,120
+35,Adalar Butik,Eskişehir,Merkez,4.2,60
+36,Mevlana Huzur Oteli,Konya,Karatay,4.6,140
+37,Meram Şehir Oteli,Konya,Meram,4.3,90
+38,Selçuklu Sarayı,Konya,Selçuklu,4.5,200
+39,Trabzon Uzungöl Resort,Trabzon,Çaykara,4.7,110
+40,Sümela Dağ Evi,Trabzon,Maçka,4.8,40
+41,Akçaabat Sahil,Trabzon,Akçaabat,4.2,85
+42,Boztepe Manzara,Trabzon,Ortahisar,4.4,130
+43,Gaziantep Han,Gaziantep,Şahinbey,4.6,90
+44,Zeugma Butik Otel,Gaziantep,Şehitkamil,4.7,55
+45,Çukurova Seyhan Oteli,Adana,Seyhan,4.3,160
+46,Taşköprü Manzaralı,Adana,Yüreğir,4.5,110
+47,Mardin Taş Konak,Mardin,Artuklu,4.9,45
+48,Kapadokya Peri Bacaları,Nevşehir,Göreme,4.8,70
+49,Ürgüp Mağara Oteli,Nevşehir,Ürgüp,4.7,85
+50,Pamukkale Traverten Oteli,Denizli,Pamukkale,4.6,150

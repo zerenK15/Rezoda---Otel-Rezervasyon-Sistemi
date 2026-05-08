@@ -1,6 +1,6 @@
 package proje.mantik;  //kontrol işlemleri yaptığık için bunu mantık paketine koyduk
 
-import proje.modeller.Musteri;   //Müşteri sınıfı farklı pakette olduğu için importla bu arayüz içine dahil ettik
+import proje.GenelSiniflar.Musteri;   //Müşteri sınıfı farklı pakette olduğu için importla bu arayüz içine dahil ettik
 import java.util.List;   //Java'nın standart list yapısını bu dosyaya çağırdık
 
 public interface IKimlikDogrulama {
