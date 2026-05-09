@@ -1,8 +1,7 @@
 package proje.mantik;
 
-import java.util.List;
-
 import proje.GenelSiniflar.Musteri;
+import java.util.List;
 
 public class KimlikDogrulayicisi implements IKimlikDogrulama {
 	//Asıl sınıfımızı oluşturduk ve "implements" ile Interface'e bakladık

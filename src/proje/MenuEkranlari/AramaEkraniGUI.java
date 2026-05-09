@@ -1,8 +1,8 @@
 package proje.MenuEkranlari;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
+import javax.swing.*;
+import javax.swing.border.LineBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -12,22 +12,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.BorderFactory;
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.ListCellRenderer;
-import javax.swing.ListSelectionModel;
-import javax.swing.border.LineBorder;
-
-import proje.GenelSiniflar.Lokasyon;
 import proje.GenelSiniflar.Otel;
+import proje.GenelSiniflar.Lokasyon;
 import proje.mantik.AramaMotoru;
 
 @SuppressWarnings("serial")
@@ -35,6 +21,7 @@ public class AramaEkraniGUI extends JFrame {
     private JFrame anaMenu;
     private JList<Otel> otelListesi;
     private DefaultListModel<Otel> modelListesi;
+    private JLabel lblDurum; // Durum metnini dinamik değiştirmek için class seviyesine aldık
 
     public AramaEkraniGUI(JFrame anaMenu) {
         this.anaMenu = anaMenu;
@@ -110,7 +97,7 @@ public class AramaEkraniGUI extends JFrame {
         scrollPane.setBounds(30, 200, 740, 250);
         getContentPane().add(scrollPane);
 
-        // SEÇ BUTONU (Düzeltilen Kısım)
+        // SEÇ BUTONU
         JButton btnSec = new JButton("✓ ODALARI SEÇ");
         btnSec.setFont(new Font("Segoe UI", Font.BOLD, 13));
         btnSec.setBackground(new Color(46, 204, 113));
@@ -122,7 +109,6 @@ public class AramaEkraniGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (otelListesi.getSelectedValue() != null) {
                     Otel secilenOtel = otelListesi.getSelectedValue();
-                    // Buradaki yorum satırlarını kaldırdım, geçiş artık aktif:
                     OdaSecimEkraniGUI odaEkran = new OdaSecimEkraniGUI(AramaEkraniGUI.this, secilenOtel);
                     odaEkran.setVisible(true);
                     setVisible(false);
@@ -155,10 +141,10 @@ public class AramaEkraniGUI extends JFrame {
         altPanel.setLayout(null);
         getContentPane().add(altPanel);
 
-        JLabel lblDurum = new JLabel("Otel seçmek için listeye tıklayın.");
+        lblDurum = new JLabel("En popüler oteller listeleniyor. Arama yaparak filtreleyebilirsiniz.");
         lblDurum.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         lblDurum.setForeground(Color.WHITE);
-        lblDurum.setBounds(20, 10, 400, 20);
+        lblDurum.setBounds(20, 10, 500, 20);
         altPanel.add(lblDurum);
 
         btnAra.addActionListener(new ActionListener() {
@@ -166,6 +152,7 @@ public class AramaEkraniGUI extends JFrame {
                 String sehir = txtSehir.getText().trim();
                 if (sehir.isEmpty()) {
                     JOptionPane.showMessageDialog(AramaEkraniGUI.this, "Lütfen bir şehir adı giriniz.", "Uyarı", JOptionPane.WARNING_MESSAGE);
+                    populerOtelleriGoster(); // Arama boşsa popülerleri geri getir
                 } else {
                     araOteller(sehir);
                 }
@@ -178,8 +165,47 @@ public class AramaEkraniGUI extends JFrame {
                 donAnaMenuye();
             }
         });
+
+        // EKRAN AÇILIR AÇILMAZ POPÜLER OTELLERİ GÖSTER
+        populerOtelleriGoster();
     }
 
+    // YENİ EKLENEN METOT: Otelleri puana göre sıralayıp ana ekranda listeler
+    private void populerOtelleriGoster() {
+        modelListesi.clear();
+        List<Otel> tumOteller = otelleriDosyadanOku();
+        
+        // Puanlara göre büyükten küçüğe sıralama (Lambda Expression)
+        tumOteller.sort((o1, o2) -> Double.compare(o2.getPuan(), o1.getPuan()));
+        
+        for (Otel otel : tumOteller) {
+            modelListesi.addElement(otel);
+        }
+        lblDurum.setText("En popüler oteller listeleniyor. Arama yaparak filtreleyebilirsiniz.");
+    }
+
+    private void araOteller(String sehir) {
+        modelListesi.clear();
+        List<Otel> tumOteller = otelleriDosyadanOku();
+        AramaMotoru motor = new AramaMotoru();
+        List<Otel> bulunanOteller = motor.otelAra(tumOteller, sehir);
+        
+        if (bulunanOteller.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Bu şehirde otel bulunamadı.", "Bilgi", JOptionPane.INFORMATION_MESSAGE);
+            populerOtelleriGoster(); // Bulunamazsa listeyi boş bırakmak yerine popülerleri geri yükle
+            return;
+        }
+
+        // Arama sonuçlarını da kendi içinde puanına göre büyükten küçüğe sıralayalım
+        bulunanOteller.sort((o1, o2) -> Double.compare(o2.getPuan(), o1.getPuan()));
+
+        for (Otel otel : bulunanOteller) {
+            modelListesi.addElement(otel);
+        }
+        lblDurum.setText("'" + sehir + "' şehri için arama sonuçları listeleniyor.");
+    }
+
+    // UTF-8 Düzeltmeli Dosya Okuma
     private List<Otel> otelleriDosyadanOku() {
         List<Otel> oteller = new ArrayList<>();
         String dosyaYolu = "oteller.csv"; 
@@ -210,22 +236,6 @@ public class AramaEkraniGUI extends JFrame {
             JOptionPane.showMessageDialog(this, "Oteller dosyadan okunamadı!\nHata: " + e.getMessage(), "Hata", JOptionPane.ERROR_MESSAGE);
         }
         return oteller;
-    }
-
-    private void araOteller(String sehir) {
-        modelListesi.clear();
-        List<Otel> tumOteller = otelleriDosyadanOku();
-        AramaMotoru motor = new AramaMotoru();
-        List<Otel> bulunanOteller = motor.otelAra(tumOteller, sehir);
-        
-        if (bulunanOteller.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Bu şehirde otel bulunamadı.", "Bilgi", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-
-        for (Otel otel : bulunanOteller) {
-            modelListesi.addElement(otel);
-        }
     }
 
     private void donAnaMenuye() {

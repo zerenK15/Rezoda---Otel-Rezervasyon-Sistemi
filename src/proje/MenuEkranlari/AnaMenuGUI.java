@@ -1,33 +1,22 @@
 package proje.MenuEkranlari;
 
-import java.awt.Color;
-import java.awt.Font;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-
 import proje.mantik.SistemHafizasi;
 
 @SuppressWarnings("serial")
 public class AnaMenuGUI extends JFrame {
 
     public AnaMenuGUI() {
-        // Sistemi ve dummy müşteriyi başlatıyoruz
-        SistemHafizasi.init();
-
         setTitle("Rezoda - Otel Rezervasyon Sistemi");
         setBounds(100, 100, 700, 550);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         getContentPane().setBackground(new Color(245, 247, 250));
         getContentPane().setLayout(null);
 
-        // BAŞLIK PANEL
+        // --- BAŞLIK PANEL ---
         JPanel ustPanel = new JPanel();
         ustPanel.setBackground(new Color(41, 128, 185));
         ustPanel.setBounds(0, 0, 700, 80);
@@ -40,23 +29,23 @@ public class AnaMenuGUI extends JFrame {
         lblLogo.setBounds(30, 20, 250, 50);
         ustPanel.add(lblLogo);
 
-        // PROFİL BUTONU (Yeni Yeri ve Tasarımı)
+        // --- PROFİL BUTONU ---
         JButton btnProfil = new JButton("👤 PROFİL");
         btnProfil.setFont(new Font("Segoe UI", Font.BOLD, 13));
-        btnProfil.setBackground(new Color(52, 73, 94)); // Daha koyu, premium bir lacivert
+        btnProfil.setBackground(new Color(52, 73, 94));
         btnProfil.setForeground(Color.WHITE);
         btnProfil.setBounds(490, 20, 140, 35);
         btnProfil.setBorder(BorderFactory.createLineBorder(new Color(189, 195, 199), 1)); 
         btnProfil.setFocusPainted(false);
         btnProfil.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ProfilEkraniGUI profilEkran = new ProfilEkraniGUI(SistemHafizasi.aktifMusteri, SistemHafizasi.globalRezervasyonlar);
+                ProfilEkraniGUI profilEkran = new ProfilEkraniGUI(SistemHafizasi.aktifMusteri);
                 profilEkran.setVisible(true);
             }
         });
         ustPanel.add(btnProfil);
 
-        // X BUTONU
+        // --- X BUTONU ---
         JButton btnKapat = new JButton("✕");
         btnKapat.setFont(new Font("Segoe UI", Font.BOLD, 16));
         btnKapat.setBackground(new Color(231, 76, 60));
@@ -71,20 +60,19 @@ public class AnaMenuGUI extends JFrame {
         });
         ustPanel.add(btnKapat);
 
-        // MENU PANEL
+        // --- MENU PANEL ---
         JPanel menuPanel = new JPanel();
         menuPanel.setBackground(new Color(245, 247, 250));
         menuPanel.setBounds(50, 120, 600, 350);
         menuPanel.setLayout(null);
         getContentPane().add(menuPanel);
 
-        // BUTONLARIN YENİ DİZİLİMİ (3 Buton için ortalandı)
-        // BUTON 1: OTEL ARA
+        // --- BUTON 1: OTEL ARA (Sol Üst) ---
         JButton btnAra = new JButton("🔍 OTEL ARA");
         btnAra.setFont(new Font("Segoe UI", Font.BOLD, 14));
         btnAra.setBackground(new Color(52, 152, 219));
         btnAra.setForeground(Color.WHITE);
-        btnAra.setBounds(10, 80, 280, 80);
+        btnAra.setBounds(10, 50, 280, 80);
         btnAra.setBorderPainted(false);
         btnAra.setFocusPainted(false);
         btnAra.addActionListener(new ActionListener() {
@@ -96,12 +84,28 @@ public class AnaMenuGUI extends JFrame {
         });
         menuPanel.add(btnAra);
 
-        // BUTON 2: HAKKIMIZDA
+        // --- BUTON 2: REZERVASYON BİLGİSİ (Sağ Üst) ---
+        JButton btnRezervasyon = new JButton("📅 REZERVASYONLARIM");
+        btnRezervasyon.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        btnRezervasyon.setBackground(new Color(155, 89, 182)); 
+        btnRezervasyon.setForeground(Color.WHITE);
+        btnRezervasyon.setBounds(310, 50, 280, 80);
+        btnRezervasyon.setBorderPainted(false);
+        btnRezervasyon.setFocusPainted(false);
+        btnRezervasyon.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                RezervasyonBilgisiGUI rezEkran = new RezervasyonBilgisiGUI(SistemHafizasi.getAktifMusteriRezervasyonlari());
+                rezEkran.setVisible(true);
+            }
+        });
+        menuPanel.add(btnRezervasyon);
+
+        // --- BUTON 3: HAKKIMIZDA (Sol Alt) ---
         JButton btnHakkimizda = new JButton("ℹ️ HAKKIMIZDA");
         btnHakkimizda.setFont(new Font("Segoe UI", Font.BOLD, 14));
         btnHakkimizda.setBackground(new Color(230, 126, 34));
         btnHakkimizda.setForeground(Color.WHITE);
-        btnHakkimizda.setBounds(310, 80, 280, 80);
+        btnHakkimizda.setBounds(10, 160, 280, 80);
         btnHakkimizda.setBorderPainted(false);
         btnHakkimizda.setFocusPainted(false);
         btnHakkimizda.addActionListener(new ActionListener() {
@@ -124,12 +128,29 @@ public class AnaMenuGUI extends JFrame {
         });
         menuPanel.add(btnHakkimizda);
 
-        // BUTON 3: ÇIKIŞ (Alta Ortalı)
+        // --- BUTON 4: HESAPTAN ÇIK (Sağ Alt - Sol Yarım) ---
+        JButton btnHesaptanCik = new JButton("🔓 HESAPTAN ÇIK");
+        btnHesaptanCik.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        btnHesaptanCik.setBackground(new Color(149, 165, 166)); // Gri tonu ile farkı belirttik
+        btnHesaptanCik.setForeground(Color.WHITE);
+        btnHesaptanCik.setBounds(310, 160, 135, 80);
+        btnHesaptanCik.setBorderPainted(false);
+        btnHesaptanCik.setFocusPainted(false);
+        btnHesaptanCik.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                SistemHafizasi.aktifMusteri = null; // Aktif oturumu temizle
+                dispose(); // Ana menüyü kapat
+                new GirisEkraniGUI().setVisible(true); // Giriş ekranına döndür
+            }
+        });
+        menuPanel.add(btnHesaptanCik);
+
+        // --- BUTON 5: UYGULAMADAN ÇIK (Sağ Alt - Sağ Yarım) ---
         JButton btnCikis = new JButton("🚪 ÇIKIŞ");
-        btnCikis.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        btnCikis.setBackground(new Color(231, 76, 60));
+        btnCikis.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        btnCikis.setBackground(new Color(231, 76, 60)); // Kırmızı rengi koruduk
         btnCikis.setForeground(Color.WHITE);
-        btnCikis.setBounds(160, 190, 280, 80);
+        btnCikis.setBounds(455, 160, 135, 80);
         btnCikis.setBorderPainted(false);
         btnCikis.setFocusPainted(false);
         btnCikis.addActionListener(new ActionListener() {
@@ -139,7 +160,7 @@ public class AnaMenuGUI extends JFrame {
         });
         menuPanel.add(btnCikis);
 
-        // ALT PANEL
+        // --- ALT PANEL ---
         JPanel altPanel = new JPanel();
         altPanel.setBackground(new Color(52, 73, 94));
         altPanel.setBounds(0, 510, 700, 40);
@@ -158,10 +179,5 @@ public class AnaMenuGUI extends JFrame {
                 System.exit(0);
             }
         });
-    }
-
-    public static void main(String[] args) {
-        AnaMenuGUI frame = new AnaMenuGUI();
-        frame.setVisible(true);
     }
 }

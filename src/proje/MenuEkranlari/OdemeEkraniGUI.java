@@ -16,13 +16,11 @@ import java.time.temporal.ChronoUnit;
 @SuppressWarnings("serial")
 public class OdemeEkraniGUI extends JFrame {
     
-    // Sadece geri dönüş için odaEkran'ı tutmamız yeterli, diğerleri constructor içinde kullanılıyor
     private JFrame odaEkran;
 
     public OdemeEkraniGUI(JFrame odaEkran, Otel otel, OdaTipi odaTipi, LocalDate girisTarihi, LocalDate cikisTarihi) {
         this.odaEkran = odaEkran;
         
-        // Sınıf değişkeni yerine direkt lokal değişken yaptık, uyarılar bitti!
         int gunSayisi = (int) ChronoUnit.DAYS.between(girisTarihi, cikisTarihi);
         double toplamTutar = odaTipi.getGunlukFiyat() * gunSayisi;
 
@@ -104,16 +102,23 @@ public class OdemeEkraniGUI extends JFrame {
 
         JCheckBox chkKullan = new JCheckBox("Kayıtlı Kartı Kullan");
         chkKullan.setBounds(20, 215, 200, 25);
-        chkKullan.setEnabled(SistemHafizasi.kartKayitliMi);
-        bilgiPanel.add(chkKullan);
-
+        
+        // KART KAYITLI MI KONTROLÜ (Giriş Yapan Kişiye Özel)
+        boolean kartKayitliMi = SistemHafizasi.aktifMusteri.getKartNo() != null && !SistemHafizasi.aktifMusteri.getKartNo().isEmpty();
+        chkKullan.setEnabled(kartKayitliMi);
+        
         chkKullan.addActionListener(e -> {
-            if (chkKullan.isSelected() && SistemHafizasi.kartKayitliMi) {
-                txtKartAdi.setText(SistemHafizasi.kayitliKartAdi);
-                txtKartNo.setText(SistemHafizasi.kayitliKartNo);
-                txtSonKullanma.setText(SistemHafizasi.kayitliSonKullanma);
+            if (chkKullan.isSelected() && kartKayitliMi) {
+                txtKartAdi.setText(SistemHafizasi.aktifMusteri.getKartAdi());
+                txtKartNo.setText(SistemHafizasi.aktifMusteri.getKartNo());
+                txtSonKullanma.setText(SistemHafizasi.aktifMusteri.getSonKullanma());
+            } else {
+                txtKartAdi.setText("");
+                txtKartNo.setText("");
+                txtSonKullanma.setText("");
             }
         });
+        bilgiPanel.add(chkKullan);
 
         // --- ÖDEME YAP BUTONU ---
         JButton btnOde = new JButton("✓ ÖDEME YAP");
@@ -150,20 +155,30 @@ public class OdemeEkraniGUI extends JFrame {
 
                     // Onaylanırsa
                     if (chkKaydet.isSelected()) {
-                        SistemHafizasi.kayitliKartAdi = kAdi;
-                        SistemHafizasi.kayitliKartNo = kNo;
-                        SistemHafizasi.kayitliSonKullanma = sKullanma;
-                        SistemHafizasi.kartKayitliMi = true;
+                        SistemHafizasi.aktifMusteri.setKartAdi(kAdi);
+                        SistemHafizasi.aktifMusteri.setKartNo(kNo);
+                        SistemHafizasi.aktifMusteri.setSonKullanma(sKullanma);
                     }
 
                     proje.GenelSiniflar.Rezervasyon yeni = new proje.GenelSiniflar.Rezervasyon(
                         "RZ-"+(System.currentTimeMillis()%10000), 
-                        SistemHafizasi.aktifMusteri.getTcKimlik(), "101", girisTarihi, cikisTarihi);
+                        SistemHafizasi.aktifMusteri.getKullaniciAdi(), // Müşteri TC yerine Username kullanıyoruz
+                        "101", girisTarihi, cikisTarihi);
                     
                     SistemHafizasi.globalRezervasyonlar.add(yeni);
                     SistemHafizasi.verileriKaydet();
                     
-                    JOptionPane.showMessageDialog(OdemeEkraniGUI.this, "Ödemeniz Onaylandı!", "Başarılı", JOptionPane.INFORMATION_MESSAGE);
+                    String sonSatir = kNo.substring(kNo.length() - 4);
+                    String mesaj = "✓ ÖDEMENIZ BAŞARIYLA ONAYLANDI!\n\n" +
+                            "Rezervasyon No: " + yeni.getRezervasyonId() + "\n" +
+                            "Otel: " + otel.getAd() + "\n" +
+                            "Oda: " + odaTipi.getLabel() + "\n" +
+                            "Tutar: " + String.format("%.2f TL", toplamTutar) + "\n" +
+                            "Kart Son 4 Hane: " + sonSatir + "\n\n" +
+                            "Giriş Tarihi: " + girisTarihi + "\n" +
+                            "Çıkış Tarihi: " + cikisTarihi;
+
+                    JOptionPane.showMessageDialog(OdemeEkraniGUI.this, mesaj, "Başarılı", JOptionPane.INFORMATION_MESSAGE);
                     
                     dispose();
                     new AnaMenuGUI().setVisible(true);
