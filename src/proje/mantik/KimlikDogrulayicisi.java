@@ -10,15 +10,6 @@ public class KimlikDogrulayicisi implements IKimlikDogrulama {
 	
 	@Override   //Polimorfizm uyguladık. Arayüzden gelen soyut metodu ezip, içine kendi dogrulama algoritmamızı yazdık
 	public boolean dogrula(String girilenAd, String girilenSifre, List<Musteri> kayitliMusteriler) {  //Dogrulama islemini yapan metod
-	/*
-	 BUNLARI SONRA SİLECEĞİM!!!
-	 
-	 List birden fazla müşteriyi alt alta depolamamızı sağlar. Normal diziden farkı baştan kaç kişi olduğunu belirtmenin zorunlu olmamasıdır
-	
-	"<Musteri>" sadece musteriler sınıfından üretilmiş nesnelerin konulabileceğini söyler.
-	
-	"kayitliMusteriler" ise bu List'in adıdır 
-	*/
 		
 		for(int i = 0; i < kayitliMusteriler.size(); i++) { 
 			
