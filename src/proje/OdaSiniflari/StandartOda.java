@@ -7,7 +7,7 @@ public class StandartOda extends Oda {   //'extends' ile StandartOda class'ını
 		                            //Kalıtım yoluyla üst sınıfın (Oda) özelliklerini kullanır
 	}
 	
-	@Override   //Burada üst sınıftaki abstract(soyut) metodu bu sınıfa göre eziyoruz(Polimorfizm)
+	@Override   //Burada üst sınıftaki abstract(soyut) metodu bu sınıfa göre override ettik.(Polimorfizm)
 	public void odaOzellikleriniYazdir() {
 		System.out.println("---- Standart Oda ----");
 		System.out.println("Yatak Sayısı: " + getYatakSayisi());  //get ile yatak sayısına ulaşacağız
