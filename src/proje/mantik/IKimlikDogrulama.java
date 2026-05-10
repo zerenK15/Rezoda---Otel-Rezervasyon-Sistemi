@@ -4,12 +4,6 @@ import proje.GenelSiniflar.Musteri;   //Müşteri sınıfı farklı pakette oldu
 import java.util.List;   //Java'nın standart list yapısını bu dosyaya çağırdık
 
 public interface IKimlikDogrulama {
-	
-	/*SONRA SİLİNECEK BU YORUM SATIRI!!!
-	  Sistemi geleceği dönük ve esnek tasarlamak için interface kullandık.
-	  Soyutlama kuralını uygulayarak kimlik doğrulama işleminin sadece kurallarını burada belirledik 
-	*/
-	
 	boolean dogrula(String girilenAd, String girilenSifre, List<Musteri> kayitliMusteriler);  //Soyut metot
 	//Bununla bu arayüzü uygulayacak her sınıfın mecburen bir "doğrula" metodu barındırmasını zorunlu kıldık
 	//Ya başarılı ya başarısız olacağı için boolean kullandık
