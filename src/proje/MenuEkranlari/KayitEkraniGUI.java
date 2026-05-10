@@ -10,6 +10,7 @@ import proje.mantik.SistemHafizasi;
 @SuppressWarnings("serial")
 public class KayitEkraniGUI extends JFrame {
 
+    // Ekranda bilgi alacağımız text kutularını sınıf seviyesinde tanımladık ki butona tıklanınca hepsine rahatça erişebilelim
     private JTextField txtAdSoyad;
     private JTextField txtKullaniciAdi;
     private JPasswordField txtSifre;
@@ -18,10 +19,19 @@ public class KayitEkraniGUI extends JFrame {
     private JTextField txtSonKullanma;
 
     public KayitEkraniGUI() {
+
+        //Pencerenin üstündeki başlık yazısı
         setTitle("Rezoda Otel Rezervasyon Sistemi - Kayıt Ol");
+
+        //Pencerenin konumu ve boyutu (x, y, genişlik, yükseklik)
         setBounds(150, 150, 450, 480);
+
+        //Çarpıya basınca tüm program kapanmasın sadece bu "Kayıt Ol" penceresi kapansın diye DISPOSE_ON_CLOSE kullandık
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); 
+
+        //Bileşenleri elle piksel piksel yerleştirmek için layout'u null yaptık
         getContentPane().setLayout(null);
+        
         getContentPane().setBackground(new Color(236, 240, 241));
 
         JLabel lblZorunlu = new JLabel("Kullanıcı Bilgileri (Zorunlu)");
@@ -35,6 +45,7 @@ public class KayitEkraniGUI extends JFrame {
         lblAdSoyad.setBounds(40, 40, 120, 25);
         getContentPane().add(lblAdSoyad);
 
+        //Kullanıcının adını gireceği metin kutusu
         txtAdSoyad = new JTextField();
         txtAdSoyad.setBounds(180, 40, 180, 25);
         getContentPane().add(txtAdSoyad);
@@ -53,11 +64,13 @@ public class KayitEkraniGUI extends JFrame {
         lblSifre.setBounds(40, 120, 120, 25);
         getContentPane().add(lblSifre);
 
+        //Şifre girerken ekranda noktalar çıksın diye JTextField yerine JPasswordField kullandık
         txtSifre = new JPasswordField();
         txtSifre.setBounds(180, 120, 180, 25);
         getContentPane().add(txtSifre);
 
-        // 5. MADDE: İsteğe Bağlı Kredi Kartı Bilgileri
+        //İsteğe Bağlı Kredi Kartı Bilgileri:
+        //Buradan aşağısı zorunlu değil, kullanıcı opsiyonel olarak dolduracağı bir kısımdır
         JLabel lblKart = new JLabel("Kredi Kartı Bilgileri (İsteğe Bağlı)");
         lblKart.setFont(new Font("Segoe UI", Font.BOLD, 14));
         lblKart.setForeground(new Color(41, 128, 185));
@@ -91,6 +104,7 @@ public class KayitEkraniGUI extends JFrame {
         txtSonKullanma.setBounds(180, 280, 180, 25);
         getContentPane().add(txtSonKullanma);
 
+        //Kaydı bitirme butonu
         JButton btnKaydiTamamla = new JButton("Kaydı Tamamla");
         btnKaydiTamamla.setBackground(new Color(39, 174, 96));
         btnKaydiTamamla.setForeground(Color.WHITE);
@@ -98,17 +112,20 @@ public class KayitEkraniGUI extends JFrame {
         btnKaydiTamamla.setBounds(180, 350, 180, 35);
         getContentPane().add(btnKaydiTamamla);
 
+        //Butona basılınca çalışacak kodlar (Action Listener)
         btnKaydiTamamla.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String adSoyad = txtAdSoyad.getText().trim();
                 String kullaniciAdi = txtKullaniciAdi.getText().trim();
                 String sifre = new String(txtSifre.getPassword());
 
+                //Zorunlu alanlardan biri bile boşsa uyarı verir ve işlemi keser (return ile aşağı inmesini engelledik)
                 if(adSoyad.isEmpty() || kullaniciAdi.isEmpty() || sifre.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Ad Soyad, Kullanıcı Adı ve Şifre alanları boş bırakılamaz!", "Hata", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
+                //Sistemde bu kullanıcı adından başka var mı diye kontrol eder. Varsa kaydetmez.
                 if (SistemHafizasi.kullaniciAdiAlinmisMi(kullaniciAdi)) {
                     JOptionPane.showMessageDialog(null, "Bu Kullanıcı Adı zaten alınmış! Lütfen başka bir ad deneyin.", "Uyarı", JOptionPane.WARNING_MESSAGE);
                     return;
@@ -116,14 +133,22 @@ public class KayitEkraniGUI extends JFrame {
 
                 // Kullanıcı oluşturuluyor ve kart bilgileri (varsa) ekleniyor
                 Musteri yeniMusteri = new Musteri(kullaniciAdi, sifre, adSoyad);
+
+                //Kart bilgileri zorunlu değildi, varsa onları da müşteriye ekliyoruz
                 yeniMusteri.setKartAdi(txtKartAdi.getText().trim());
                 yeniMusteri.setKartNo(txtKartNo.getText().trim());
                 yeniMusteri.setSonKullanma(txtSonKullanma.getText().trim());
 
+                //Müşteriyi sistemin genel hafızasına (kullanıcılar listesine) ekliyoruz
                 SistemHafizasi.kullanicilar.add(yeniMusteri);
+
+                //Ekledikten sonra güncel verileri dosyaya kaydediyoruz ki kaybolmasın
                 SistemHafizasi.verileriKaydet();
 
+                //Kayıt başarılıysa kullanıcıya başarılı mesajı göster
                 JOptionPane.showMessageDialog(null, "Kayıt Başarıyla Oluşturuldu! Giriş yapabilirsiniz.", "Başarılı", JOptionPane.INFORMATION_MESSAGE);
+                
+                //İşimiz bittiği için bu kayıt ekranını kapattık (dispose), arkadaki giriş ekranından devam edilebilir.
                 dispose(); 
             }
         });
