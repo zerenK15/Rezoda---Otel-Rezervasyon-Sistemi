@@ -1,6 +1,6 @@
 package proje.hatalar;
 
-// Müşteri rezervasyon için bugünden daha eski bir tarih 
+// müşteri rezervasyon için bugünden daha eski bir tarih 
 // seçmeye çalıştığında fırlatılan özel hata sınıfımız.
 
 public class GecmisTarihException extends Exception {
